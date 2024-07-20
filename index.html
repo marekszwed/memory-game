@@ -7,7 +7,28 @@
     <title>Memory Game</title>
   </head>
   <body>
-   
+    <div class="memory-game">
+      <div class="modal" role="dialog" aria-labelledby="dialogTitle" aria-describedby="dialogDescritpion">
+        <h1 class="modal__title" id="dialogTitle">memory game</h1>
+        <h2 class="modal__description" id="dialogDescritpion">Your goal is to find as many matching pairs of cards as possible. You only have 3 lives. Each time you reveal a card that does not match the previous one, you lose one life.</h2>
+
+				<form class="form">
+					<fieldset>
+						<legend>complete the fields and select the difficulty level</legend>
+						<label for="name"></label>
+						<input type="text" id="name">
+						<input type="checkbox" id="easy">
+						<label for="easy">easy</label>
+						<input type="checkbox" id="medium">
+						<label for="medium">medium</label>
+						<input type="checkbox" id="hard">
+						<label for="hard">hard</label>
+					</fieldset>
+				</form>
+      </div>
+      
+      <div class="app"></div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
