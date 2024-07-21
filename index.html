@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 	<head>
 		<meta charset="UTF-8" />
@@ -9,7 +9,7 @@
 	<body>
 		<div class="memory-game">
 			<div
-				class="dialog"
+				class="dialog hidden"
 				role="dialog"
 				aria-labelledby="dialogTitle"
 				aria-describedby="dialogDescritpion"
@@ -25,26 +25,58 @@
 					<fieldset class="form__area">
 						<legend>complete the fields and select your difficulty</legend>
 						<div class="form__area-input">
-							<input type="text" id="name" class="form__area-input-name js-input-name" placeholder="Nick"/>
+							<input
+								type="text"
+								id="name"
+								class="form__area-input-name js-input-name"
+								placeholder="Nick"
+								required
+							/>
 						</div>
 						<div class="form__area-input">
-              <label for="easy">easy</label>
-							<input type="checkbox" class="form__area-input-check" id="easy"/>
+							<label for="easy">easy</label>
+							<input type="checkbox" class="form__area-input-check" id="easy" />
 						</div>
 						<div class="form__area-input">
-              <label for="medium">medium</label>
-							<input type="checkbox" class="form__area-input-check" id="medium"/>
+							<label for="medium">medium</label>
+							<input
+								type="checkbox"
+								class="form__area-input-check"
+								id="medium"
+							/>
 						</div>
 						<div class="form__area-input">
-              <label for="hard">hard</label>
-							<input type="checkbox" class="form__area-input-check" id="hard"/>
+							<label for="hard">hard</label>
+							<input type="checkbox" class="form__area-input-check" id="hard" />
 						</div>
 					</fieldset>
-          <button class="form-btn js-play-button">play</button>
+					<button type="submit" class="form-btn js-play-button">play</button>
 				</form>
 			</div>
 
-			<div class="app"></div>
+			<div class="app">
+				<div class="game" id="memory-app">
+					<img src="" alt="" />
+					<img src="" alt="" />
+					<img src="" alt="" />
+					<img src="" alt="" />
+					<img src="" alt="" />
+					<img src="" alt="" />
+					<img src="" alt="" />
+					<img src="" alt="" />
+					<img src="" alt="" />
+					<img src="" alt="" />
+					<img src="" alt="" />
+					<img src="" alt="" />
+					<img src="" alt="" />
+					<img src="" alt="" />
+					<img src="" alt="" />
+				</div>
+				<div class="scoreboard">
+					<p class="scoreboard__result">You win</p>
+					<button class="scoreboard__btn" type="submit">try again</button>
+				</div>
+			</div>
 		</div>
 		<script type="module" src="/src/main.ts"></script>
 	</body>

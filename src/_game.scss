@@ -1,0 +1,37 @@
+.app {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	.game {
+		position: relative;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		width: 800px;
+		// height: 750px;
+	
+		img {
+			display: flex;
+			width: 150px;
+			height: 250px;
+			background-position: center;
+			background-size: cover;
+			border-radius: 10px;
+			overflow: hidden;
+		}
+	}
+
+  .scoreboard {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__result {
+      margin: .2em auto;
+    }
+    &__btn {
+      width: 100%;
+    }
+  }
+}

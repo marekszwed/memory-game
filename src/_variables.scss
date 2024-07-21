@@ -1,0 +1,32 @@
+$main-background: #333;
+$starwars-color: #ffe81f;
+$nameInput-background: #3a3a3a;
+
+h1 {
+	font-size: 4.8rem;
+}
+
+.scoreboard__result {
+  font-size: 3rem;
+}
+
+h2,
+legend,
+label {
+	font-size: 1.8rem;
+}
+
+button {
+	cursor: pointer;
+}
+
+.dialog__title,
+.form__area-input-name,
+legend,
+label {
+	color: $starwars-color;
+}
+
+.dialog, .form__area-input-name {
+  border: 1px solid $starwars-color;
+}
