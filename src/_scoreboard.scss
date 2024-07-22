@@ -1,0 +1,15 @@
+.app {
+  .scoreboard {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		&__result {
+			margin: 0.2em auto;
+		}
+		&__btn {
+			width: 100%;
+		}
+	}
+}
