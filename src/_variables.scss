@@ -7,7 +7,7 @@ h1 {
 }
 
 .scoreboard__result {
-  font-size: 3rem;
+	font-size: 3rem;
 }
 
 h2,
@@ -27,6 +27,19 @@ label {
 	color: $starwars-color;
 }
 
-.dialog, .form__area-input-name {
-  border: 1px solid $starwars-color;
+.dialog,
+.form__area-input-name {
+	border: 1px solid $starwars-color;
+}
+
+.computer,
+.player {
+	font-size: 2rem;
+	color: $starwars-color;
+}
+
+
+.player-score, .computer-score {
+	font-size: 2rem;
+	color: #fff;
 }

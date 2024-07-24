@@ -1,6 +1,7 @@
 @import './reset';
 @import './variables';
 @import './buttons';
+@import './layout';
 @import './dialog';
 @import './game';
 @import './scoreboard';
@@ -24,13 +25,8 @@ body {
 	height: 100svh;
 }
 
-.memory-game {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100%;
-}
-
 .hidden {
 	display: none;
 }
+
+
