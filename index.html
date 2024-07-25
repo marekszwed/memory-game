@@ -1,75 +1,63 @@
 <!doctype html>
 <html lang="pl">
-	<head>
-		<meta charset="UTF-8" />
-		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Memory Game</title>
-	</head>
-	<body>
-		<div class="memory-game">
-			<div
-				class="dialog hidden"
-				role="dialog"
-				aria-labelledby="dialogTitle"
-				aria-describedby="dialogDescritpion"
-			>
-				<h1 class="dialog__title" id="dialogTitle">star wars memory game</h1>
-				<h2 class="dialog__description" id="dialogDescritpion">
-					Your goal is to find as many matching pairs of cards as possible. You
-					only have 3 lives. Each time you reveal a card that does not match the
-					previous one, you lose one life.
-				</h2>
 
-				<form class="form">
-					<fieldset class="form__area">
-						<legend>complete the fields and select your difficulty</legend>
-						<div class="form__area-input">
-							<input
-								type="text"
-								id="name"
-								class="form__area-input-name js-input-name"
-								placeholder="Nick"
-								required
-							/>
-						</div>
-						<div class="form__area-input">
-							<label for="easy">easy</label>
-							<input type="checkbox" class="form__area-input-check" id="easy" />
-						</div>
-						<div class="form__area-input">
-							<label for="medium">medium</label>
-							<input
-								type="checkbox"
-								class="form__area-input-check"
-								id="medium"
-							/>
-						</div>
-						<div class="form__area-input">
-							<label for="hard">hard</label>
-							<input type="checkbox" class="form__area-input-check" id="hard" />
-						</div>
-					</fieldset>
-					<button type="submit" class="form-btn js-play-button">play</button>
-				</form>
-			</div>
+<head>
+	<meta charset="UTF-8" />
+	<link rel="icon" type="image/svg+xml" href="/vite.svg" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Memory Game</title>
+</head>
 
-			<div class="app js-app">
-				<ul class="game js-game" id="memory-app"></ul>
-				<div class="scoreboard">
-					<div class="scoreboard__player">
-						<p class="player">Player</p>
-						<p class="player-score js-player-score">0</p>
+<body>
+	<div class="memory-game">
+		<div class="dialog hidden" role="dialog" aria-labelledby="dialogTitle" aria-describedby="dialogDescritpion">
+			<h1 class="dialog__title" id="dialogTitle">star wars memory game</h1>
+			<h2 class="dialog__description" id="dialogDescritpion">
+				Your goal is to find as many matching pairs of cards as possible. You
+				only have 3 lives. Each time you reveal a card that does not match the
+				previous one, you lose one life.
+			</h2>
+
+			<form class="form">
+				<fieldset class="form__area">
+					<legend>complete1 the fields and select your difficulty</legend>
+					<div class="form__area-input">
+						<input type="text" id="name" class="form__area-input-name js-input-name" placeholder="Nick" required />
 					</div>
-					<div class="scoreboard__computer">
-						<p class="computer">Computer</p>
-						<p class="computer-score js-computer-score">0</p>
+					<div class="form__area-input">
+						<label for="easy">easy</label>
+						<input type="checkbox" class="form__area-input-check" id="easy" />
 					</div>
+					<div class="form__area-input">
+						<label for="medium">medium</label>
+						<input type="checkbox" class="form__area-input-check" id="medium" />
+					</div>
+					<div class="form__area-input">
+						<label for="hard">hard</label>
+						<input type="checkbox" class="form__area-input-check" id="hard" />
+					</div>
+				</fieldset>
+				<button type="submit" class="form-btn js-play-button">play</button>
+			</form>
+		</div>
 
-					<button class="scoreboard__btn" type="submit">try again</button>
+		<div class="app js-app">
+			<ul class="game js-game" id="memory-app"></ul>
+			<div class="scoreboard">
+				<div class="scoreboard__player">
+					<p class="player">Player</p>
+					<p class="player-score js-player-score">0</p>
 				</div>
+				<div class="scoreboard__computer">
+					<p class="computer">Computer</p>
+					<p class="computer-score js-computer-score">0</p>
+				</div>
+
+				<button class="scoreboard__btn" type="submit">try again</button>
 			</div>
 		</div>
-		<script type="module" src="/src/main.ts"></script>
-	</body>
+	</div>
+	<script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>
