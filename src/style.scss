@@ -1,4 +1,31 @@
 @import './reset';
-@import './modal';
+@import './variables';
+@import './buttons';
+@import './layout';
+@import './dialog';
+@import './game';
+@import './scoreboard';
+@import './helpers';
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	position: relative;
+	font-family: sans-serif;
+	background-color: var(--main-background);
+	height: 100svh;
+}
+
+
 
 

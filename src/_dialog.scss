@@ -1,0 +1,73 @@
+.dialog {
+	@include flex-column;
+	margin: 7em 0.5em 1em 0.5em;
+	width: 800px;
+	align-items: center;
+	border-radius: 10px;
+	border: 1px solid var(--yellow-color);
+	gap: 10px;
+
+	&__title {
+		margin-top: 1em;
+		text-transform: uppercase;
+		font-family: serif;
+		text-align: center;
+		font-size: var(--h1-size);
+		color: var(--yellow-color);
+	}
+
+	&__description {
+		text-transform: uppercase;
+		padding-inline: 2.5em;
+		line-height: 2.9rem;
+		color: aliceblue;
+		text-align: center;
+		font-size: var(--h2-legend-label-size);
+	}
+}
+
+.form {
+	@include flex-column;
+	align-self: center;
+	margin-top: 0.5em;
+	width: 70%;
+
+	.form__area {
+		@include flex-column;
+		legend {
+			margin: 1em 0;
+			text-transform: uppercase;
+			text-align: center;
+			font-family: serif;
+			line-height: 2.9rem;
+			color: var(--yellow-color);
+			font-size: var(--h2-legend-label-size);
+		}
+	}
+	&__area-input {
+		display: flex;
+		justify-content: space-between;
+		margin: 1em 0;
+		font-size: var(--h2-legend-label-size);
+
+		label {
+			color: var(--yellow-color);
+		}
+
+		.area-input-name {
+			padding: 0.3em 2em 0.3em 0.5em;
+			font-size: 1.8rem;
+			background-color: var(--input-background);
+			color: var(--yellow-color);
+			border: 1px solid var(--yellow-color);
+			border-radius: 5px;
+		}
+
+		.area-input-check {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			cursor: pointer;
+		}
+	}
+}
