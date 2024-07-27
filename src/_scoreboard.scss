@@ -1,8 +1,6 @@
 .app {
 	.scoreboard {
-		position: relative;
-		display: flex;
-		flex-direction: column;
+		@include flex-column;
 		margin-top: 1em;
 		width: 100%;
 
@@ -14,7 +12,17 @@
 			margin-top: 1em;
 			padding-inline: 3em;
 
-			
+			.computer,
+			.player {
+				font-size: var(--scoreboard-font-size);
+				color: var(--starwars-color);
+			}
+
+			.player-score,
+			.computer-score {
+				font-size: var(--scoreboard-font-size);
+				color: var(--pure-white);
+			}
 		}
 		&__btn {
 			width: 100%;

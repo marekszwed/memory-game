@@ -1,45 +1,24 @@
-$main-background: #333;
-$starwars-color: #ffe81f;
-$nameInput-background: #3a3a3a;
-
-h1 {
-	font-size: 4.8rem;
+:root {
+	--pure-white: #fff;
+	--pure-black: #000;
+	--main-background: #333;
+	--starwars-color: #ffe81f;
+	--nameInput-background: #3a3a3a;
+	--h1-size: 4.8rem;
+	--h2legendlabel-size: 1.8rem;
+	--scoreboard-font-size: 2rem;
+	--scoreboard-result-size: 3rem;
 }
 
-.scoreboard__result {
-	font-size: 3rem;
+@mixin flex-row {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-h2,
-legend,
-label {
-	font-size: 1.8rem;
-}
-
-button {
-	cursor: pointer;
-}
-
-.dialog__title,
-.form__area-input-name,
-legend,
-label {
-	color: $starwars-color;
-}
-
-.dialog,
-.form__area-input-name {
-	border: 1px solid $starwars-color;
-}
-
-.computer,
-.player {
-	font-size: 2rem;
-	color: $starwars-color;
-}
-
-
-.player-score, .computer-score {
-	font-size: 2rem;
-	color: #fff;
+@mixin flex-column {
+	position: relative;
+	display: flex;
+	flex-direction: column;
 }

@@ -9,7 +9,7 @@
 	<body>
 		<div class="memory-game">
 			<div
-				class="dialog hidden"
+				class="dialog"
 				role="dialog"
 				aria-labelledby="dialogTitle"
 				aria-describedby="dialogDescritpion"
@@ -20,7 +20,6 @@
 					only have 3 lives. Each time you reveal a card that does not match the
 					previous one, you lose one life.
 				</h2>
-
 				<form class="form">
 					<fieldset class="form__area">
 						<legend>complete the fields and select your difficulty</legend>
@@ -35,27 +34,34 @@
 						</div>
 						<div class="form__area-input">
 							<label for="easy">easy</label>
-							<input type="checkbox" class="form__area-input-check" id="easy" />
+							<input
+								type="checkbox"
+								class="form__area-input-check js-check-input"
+								id="easy"
+							/>
 						</div>
 						<div class="form__area-input">
 							<label for="medium">medium</label>
 							<input
 								type="checkbox"
-								class="form__area-input-check"
+								class="form__area-input-check js-check-input"
 								id="medium"
 							/>
 						</div>
 						<div class="form__area-input">
 							<label for="hard">hard</label>
-							<input type="checkbox" class="form__area-input-check" id="hard" />
+							<input
+								type="checkbox"
+								class="form__area-input-check js-check-input"
+								id="hard"
+							/>
 						</div>
 					</fieldset>
 					<button type="submit" class="form-btn js-play-button">play</button>
 				</form>
 			</div>
-
-			<div class="app js-app">
-				<ul class="game js-game" id="memory-app"></ul>
+			<div class="app js-app hidden">
+				<ul class="game js-game" id="memoryApp"></ul>
 				<div class="scoreboard">
 					<div class="scoreboard__player">
 						<p class="player">Player</p>
@@ -65,7 +71,6 @@
 						<p class="computer">Computer</p>
 						<p class="computer-score js-computer-score">0</p>
 					</div>
-
 					<button class="scoreboard__btn" type="submit">try again</button>
 				</div>
 			</div>

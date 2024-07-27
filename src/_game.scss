@@ -1,7 +1,5 @@
 .app {
-	position: relative;
-	display: flex;
-	flex-direction: column;
+	@include flex-column;
 	.game {
 		position: relative;
 		display: flex;

@@ -1,11 +1,10 @@
 .dialog {
-	position: relative;
-	display: flex;
-	flex-direction: column;
+	@include flex-column;
 	margin: 7em 0.5em 1em 0.5em;
 	width: 800px;
 	align-items: center;
 	border-radius: 10px;
+	border: 1px solid var(--starwars-color);
 	gap: 10px;
 
 	&__title {
@@ -13,6 +12,8 @@
 		text-transform: uppercase;
 		font-family: serif;
 		text-align: center;
+		font-size: var(--h1-size);
+		color: var(--starwars-color);
 	}
 
 	&__description {
@@ -21,40 +22,45 @@
 		line-height: 2.9rem;
 		color: aliceblue;
 		text-align: center;
+		font-size: var(--h2legendlabel-size);
 	}
 }
 
 .form {
-	position: relative;
-	display: flex;
-	flex-direction: column;
+	@include flex-column;
 	align-self: center;
 	margin-top: 0.5em;
 	width: 70%;
 
 	.form__area {
-		position: relative;
-		display: flex;
-		flex-direction: column;
-
+		@include flex-column;
 		legend {
 			margin: 1em 0;
 			text-transform: uppercase;
 			text-align: center;
 			font-family: serif;
 			line-height: 2.9rem;
+			color: var(--starwars-color);
+			font-size: var(--h2legendlabel-size);
 		}
 	}
 	&__area-input {
 		display: flex;
 		justify-content: space-between;
 		margin: 1em 0;
+		font-size: var(--h2legendlabel-size);
+
+		label {
+			color: var(--starwars-color);
+		}
 	}
 
 	&__area-input-name {
 		padding: 0.3em 2em 0.3em 0.5em;
 		font-size: 1.8rem;
-		background-color: $nameInput-background;		
+		background-color: var(--nameInput-background);
+		color: var(--starwars-color);
+		border: 1px solid var(--starwars-color);
 		border-radius: 5px;
 	}
 
@@ -62,5 +68,6 @@
 		display: inline-block;
 		width: 20px;
 		height: 20px;
+		cursor: pointer;
 	}
 }

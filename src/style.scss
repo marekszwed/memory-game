@@ -5,6 +5,7 @@
 @import './dialog';
 @import './game';
 @import './scoreboard';
+@import './helpers';
 
 *,
 *::before,
@@ -21,12 +22,10 @@ html {
 body {
 	position: relative;
 	font-family: sans-serif;
-	background-color: $main-background;
+	background-color: var(--main-background);
 	height: 100svh;
 }
 
-.hidden {
-	display: none;
-}
+
 
 
