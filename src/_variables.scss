@@ -1,13 +1,16 @@
 :root {
+	// Colors
 	--pure-white: #fff;
 	--pure-black: #000;
 	--main-background: #333;
-	--starwars-color: #ffe81f;
-	--nameInput-background: #3a3a3a;
+	--yellow-color: #ffe81f;
+	--input-background: #3a3a3a;
+
+	// Font-size
 	--h1-size: 4.8rem;
-	--h2legendlabel-size: 1.8rem;
-	--scoreboard-font-size: 2rem;
+	--h2-legend-label-size: 1.8rem;
 	--scoreboard-result-size: 3rem;
+	--scoreboard-font-size: 2rem;
 }
 
 @mixin flex-row {

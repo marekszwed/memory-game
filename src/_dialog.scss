@@ -4,7 +4,7 @@
 	width: 800px;
 	align-items: center;
 	border-radius: 10px;
-	border: 1px solid var(--starwars-color);
+	border: 1px solid var(--yellow-color);
 	gap: 10px;
 
 	&__title {
@@ -13,7 +13,7 @@
 		font-family: serif;
 		text-align: center;
 		font-size: var(--h1-size);
-		color: var(--starwars-color);
+		color: var(--yellow-color);
 	}
 
 	&__description {
@@ -22,7 +22,7 @@
 		line-height: 2.9rem;
 		color: aliceblue;
 		text-align: center;
-		font-size: var(--h2legendlabel-size);
+		font-size: var(--h2-legend-label-size);
 	}
 }
 
@@ -40,34 +40,34 @@
 			text-align: center;
 			font-family: serif;
 			line-height: 2.9rem;
-			color: var(--starwars-color);
-			font-size: var(--h2legendlabel-size);
+			color: var(--yellow-color);
+			font-size: var(--h2-legend-label-size);
 		}
 	}
 	&__area-input {
 		display: flex;
 		justify-content: space-between;
 		margin: 1em 0;
-		font-size: var(--h2legendlabel-size);
+		font-size: var(--h2-legend-label-size);
 
 		label {
-			color: var(--starwars-color);
+			color: var(--yellow-color);
 		}
-	}
 
-	&__area-input-name {
-		padding: 0.3em 2em 0.3em 0.5em;
-		font-size: 1.8rem;
-		background-color: var(--nameInput-background);
-		color: var(--starwars-color);
-		border: 1px solid var(--starwars-color);
-		border-radius: 5px;
-	}
+		.area-input-name {
+			padding: 0.3em 2em 0.3em 0.5em;
+			font-size: 1.8rem;
+			background-color: var(--input-background);
+			color: var(--yellow-color);
+			border: 1px solid var(--yellow-color);
+			border-radius: 5px;
+		}
 
-	&__area-input-check {
-		display: inline-block;
-		width: 20px;
-		height: 20px;
-		cursor: pointer;
+		.area-input-check {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			cursor: pointer;
+		}
 	}
 }
