@@ -5,6 +5,11 @@
 		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Memory Game</title>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+		/>
 	</head>
 	<body>
 		<div class="memory-game">
@@ -38,8 +43,8 @@
 								type="radio"
 								class="area-input-check js-check-input"
 								name="choose"
-								id="easy"
-								checked
+								value="easy"
+								
 							/>
 						</div>
 						<div class="form__area-input">
@@ -48,7 +53,7 @@
 								type="radio"
 								class="area-input-check js-check-input"
 								name="choose"
-								id="medium"
+								value="medium"
 							/>
 						</div>
 						<div class="form__area-input">
@@ -57,7 +62,7 @@
 								type="radio"
 								class="area-input-check js-check-input"
 								name="choose"
-								id="hard"
+								value="hard"
 							/>
 						</div>
 					</fieldset>
@@ -75,10 +80,14 @@
 						<p class="computer">Computer</p>
 						<p class="computer-score js-computer-score">0</p>
 					</div>
-					<button class="scoreboard__btn" type="submit">try again</button>
+					<button class="scoreboard__btn js-restart-game" type="submit">try again</button>
 				</div>
 			</div>
 		</div>
+		<script
+			type="text/javascript"
+			src="https://cdn.jsdelivr.net/npm/toastify-js"
+		></script>
 		<script type="module" src="/src/main.ts"></script>
 	</body>
 </html>
