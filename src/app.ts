@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Toastify from 'toastify-js';
+import showToast from './_helpers.ts';
 
 const modal = document.querySelector('.dialog') as HTMLDivElement;
 const game = document.querySelector('.js-app') as HTMLDivElement;
@@ -13,32 +13,30 @@ const restartButton = document.querySelector(
 	'.js-restart-game'
 ) as HTMLButtonElement;
 // Hidden class
-const hiddenClass: string = 'hidden';
+const hiddenClass = 'hidden';
 // URL
-const API_KEY = '28be1067';
+const API_KEY = import.meta.env.VITE_API_KEY;
 const API_LINK = 'http://www.omdbapi.com/?t=Star+Wars&apikey=';
 const URL = API_LINK + API_KEY;
 
-let numberOfImage: number;
+interface GameLevels {
+	easy: number;
+	medium: number;
+	hard: number;
+}
+
+const gameLevels: GameLevels = {
+	easy: 8,
+	medium: 16,
+	hard: 20,
+};
 
 const closeModal = () => {
 	if (nameInput.value) {
 		modal.classList.add(hiddenClass);
 		game.classList.remove(hiddenClass);
 	} else {
-		Toastify({
-			text: 'Please add your nickname',
-			duration: 3000,
-			newWindow: true,
-			close: true,
-			gravity: 'top', // `top` or `bottom`
-			position: 'center', // `left`, `center` or `right`
-			stopOnFocus: true, // Prevents dismissing of toast on hover
-			style: {
-				background: 'linear-gradient(to right, #00b09b, #96c93d)',
-			},
-			onClick: function () {}, // Callback after click
-		}).showToast();
+		showToast('warning', 'Please enter your nickname');
 	}
 };
 
@@ -51,35 +49,30 @@ const setDifficulty = () => {
 		const selectedValue = selectedInput.value;
 		localStorage.setItem('selectedInput', selectedValue);
 	} else {
-		console.log('Nothing clicked');
+		showToast('warning', 'Please select your difficulty level');
 	}
 };
 
 const setGrid = () => {
-	const chosenValue = localStorage.getItem('selectedInput');
-	console.log(chosenValue);
+	const chosenValue = localStorage.getItem('selectedInput') as keyof GameLevels;
 
-	switch (chosenValue) {
-		case 'easy':
-			numberOfImage = 8;
-			break;
-		case 'medium':
-			numberOfImage = 16;
-			break;
-		case 'hard':
-			numberOfImage = 20;
-			break;
-		default:
-			numberOfImage = 8;
-	}
+	const chosedValue = gameLevels[chosenValue] || 8;
+	console.log(chosedValue);
 
 	addItems();
 };
 
 async function fetchData() {
-	await axios.get(URL).then((res) => {
-		console.log(res.data);
-	});
+	// await axios.get(URL).then((res) => {
+	// 	console.log(res.data);
+	// });
+	try {
+		const result = await axios.get(URL);
+		showToast('success', 'Data fetched successfully');
+		console.log(result);
+	} catch (e) {
+		showToast('error', 'Something went wrong, try again later');
+	}
 }
 // checking axios response
 fetchData();
