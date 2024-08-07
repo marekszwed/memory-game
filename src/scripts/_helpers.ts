@@ -1,18 +1,10 @@
 import Toastify from 'toastify-js';
-
-interface toastifyOptions {
-	style?: string;
-	duration?: number;
-	newWindow: boolean;
-	close: boolean;
-	gravity: 'top' | 'bottom';
-	position: 'left' | 'center' | 'right';
-}
+import StartToastifyInstance from 'toastify-js';
 
 const showToast = (
 	variant: 'success' | 'warning' | 'error',
 	text: string,
-	options: Partial<toastifyOptions>
+	options?: Partial<StartToastifyInstance.Options>
 ) => {
 	const style = {
 		success: 'linear-gradient(to right, #00b09b, #96c93d)',
@@ -33,10 +25,9 @@ const showToast = (
 		style: {
 			background,
 		},
-		onClick: function () {}, // Callback after click
+		onClick: function () {},
+		...options, // Callback after click
 	}).showToast();
-
-	return { ...Toastify, ...options };
 };
 
 export default showToast;

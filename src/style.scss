@@ -1,11 +1,11 @@
-@import './reset';
-@import './variables';
-@import './buttons';
-@import './layout';
-@import './dialog';
-@import './game';
-@import './scoreboard';
-@import './helpers';
+@import '../src/styles/reset';
+@import '../src/styles/variables';
+@import '../src/styles/buttons';
+@import '../src/styles/layout';
+@import '../src/styles/dialog';
+@import '../src/styles/game';
+@import '../src/styles/scoreboard';
+@import '../src/styles/helpers';
 
 *,
 *::before,
@@ -25,7 +25,3 @@ body {
 	background-color: var(--main-background);
 	height: 100svh;
 }
-
-
-
-

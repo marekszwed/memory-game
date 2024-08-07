@@ -36,7 +36,7 @@ const closeModal = () => {
 		modal.classList.add(hiddenClass);
 		game.classList.remove(hiddenClass);
 	} else {
-		showToast('warning', 'Please enter your nickname');
+		showToast('warning', 'Please enter your nickname', {});
 	}
 };
 
