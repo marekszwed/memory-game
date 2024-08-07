@@ -35,25 +35,28 @@
 						<div class="form__area-input">
 							<label for="easy">easy</label>
 							<input
-								type="checkbox"
+								type="radio"
 								class="area-input-check js-check-input"
-								id="easy"
+								name="choose"
+								value="easy"
 							/>
 						</div>
 						<div class="form__area-input">
 							<label for="medium">medium</label>
 							<input
-								type="checkbox"
+								type="radio"
 								class="area-input-check js-check-input"
-								id="medium"
+								name="choose"
+								value="medium"
 							/>
 						</div>
 						<div class="form__area-input">
 							<label for="hard">hard</label>
 							<input
-								type="checkbox"
+								type="radio"
 								class="area-input-check js-check-input"
-								id="hard"
+								name="choose"
+								value="hard"
 							/>
 						</div>
 					</fieldset>
@@ -71,7 +74,9 @@
 						<p class="computer">Computer</p>
 						<p class="computer-score js-computer-score">0</p>
 					</div>
-					<button class="scoreboard__btn" type="submit">try again</button>
+					<button class="scoreboard__btn js-restart-game" type="submit">
+						try again
+					</button>
 				</div>
 			</div>
 		</div>
