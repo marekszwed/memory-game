@@ -49,14 +49,16 @@ const setDifficulty = () => {
 		const selectedValue = selectedInput.value;
 		localStorage.setItem('selectedInput', selectedValue);
 	} else {
-		showToast('warning', 'Please select your difficulty level');
+		showToast('warning', 'Please select your difficulty level', {
+			position: 'left',
+		});
 	}
 };
 
 const setGrid = () => {
 	const chosenValue = localStorage.getItem('selectedInput') as keyof GameLevels;
 
-	const chosedValue = gameLevels[chosenValue] || 8;
+	const chosedValue = gameLevels[chosenValue] || gameLevels.easy;
 	console.log(chosedValue);
 
 	addItems();
