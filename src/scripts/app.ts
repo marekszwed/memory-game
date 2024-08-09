@@ -1,5 +1,13 @@
-import axios from 'axios';
+// import axios from 'axios';
 import showToast from './_helpers.ts';
+// import createApi from './_unsplashApi.ts';
+import { createApi } from 'unsplash-js';
+
+const api = createApi({
+	// Don't forget to set your access token here!
+	// See https://unsplash.com/developers
+	accessKey: import.meta.env.VITE_API_ACCESS_KEY,
+});
 
 const modal = document.querySelector('.dialog') as HTMLDivElement;
 const game = document.querySelector('.js-app') as HTMLDivElement;
@@ -14,10 +22,6 @@ const restartButton = document.querySelector(
 ) as HTMLButtonElement;
 // Hidden class
 const hiddenClass = 'hidden';
-// URL
-const API_KEY = import.meta.env.VITE_API_KEY;
-const API_LINK = 'http://www.omdbapi.com/?t=Star+Wars&apikey=';
-const URL = API_LINK + API_KEY;
 
 interface GameLevels {
 	easy: number;
@@ -35,6 +39,7 @@ const closeModal = () => {
 	if (nameInput.value) {
 		modal.classList.add(hiddenClass);
 		game.classList.remove(hiddenClass);
+		setDifficulty();
 	} else {
 		showToast('warning', 'Please enter your nickname', {});
 	}
@@ -48,51 +53,56 @@ const setDifficulty = () => {
 	if (selectedInput) {
 		const selectedValue = selectedInput.value;
 		localStorage.setItem('selectedInput', selectedValue);
+		checkChoseValue();
 	} else {
-		showToast('warning', 'Please select your difficulty level', {
-			position: 'left',
-		});
+		showToast('warning', 'Please select your difficulty level', {});
 	}
 };
 
-const setGrid = () => {
+async function checkChoseValue() {
 	const chosenValue = localStorage.getItem('selectedInput') as keyof GameLevels;
 
 	const chosedValue = gameLevels[chosenValue] || gameLevels.easy;
 	console.log(chosedValue);
 
-	addItems();
+	await fetchData();
+	await addItems(chosedValue);
+}
+
+const fetchData = () => {
+	try {
+		api.search
+			.getPhotos({ query: 'cat', orientation: 'portrait', perPage: 30 })
+			.then((result) => {
+				console.log(result.response?.results.length);
+				const imageArray = [];
+				if (result) {
+					imageArray.push(result);
+				} else {
+					showToast('error', 'Something went wrong, please try again later');
+				}
+				console.log(imageArray);
+			});
+	} catch (error) {
+		showToast('error', 'Data fetch failure');
+	}
 };
 
-async function fetchData() {
-	// await axios.get(URL).then((res) => {
-	// 	console.log(res.data);
-	// });
-	try {
-		const result = await axios.get(URL);
-		showToast('success', 'Data fetched successfully');
-		console.log(result);
-	} catch (e) {
-		showToast('error', 'Something went wrong, try again later');
-	}
-}
-// checking axios response
-fetchData();
-
-const addItems = () => {
+const addItems = (chosedValue: number) => {
 	const liItem = document.createElement('li');
 	const imgItem = document.createElement('img');
 	const blankItem = document.createElement('div');
+
 	blankItem.classList.add('blank-background');
 	liItem.append(imgItem, blankItem);
 	gameContainer.appendChild(liItem);
+
+	console.log(chosedValue);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
 	playButton.addEventListener('click', (e) => {
 		e.preventDefault();
 		closeModal();
-		setDifficulty();
-		setGrid();
 	});
 });
