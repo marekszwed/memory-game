@@ -1,6 +1,5 @@
-// import axios from 'axios';
 import { GameLevels, gameLevels } from './_types.ts';
-import { Photos } from 'unsplash-js/dist/methods/search/types/response';
+import { Basic } from 'unsplash-js/dist/methods/photos/types';
 import showToast from './_helpers.ts';
 import { createApi } from 'unsplash-js';
 
@@ -22,7 +21,7 @@ const restartButton = document.querySelector(
 // Hidden class
 const hiddenClass = 'hidden';
 
-const imageArray: Photos[] = [];
+const imageArray: Basic[] = [];
 
 const closeModal = () => {
 	if (nameInput.value) {
