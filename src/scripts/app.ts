@@ -1,12 +1,11 @@
 // import axios from 'axios';
+import { GameLevels, gameLevels } from './_types.ts';
+import { Photos } from 'unsplash-js/dist/methods/search/types/response';
 import showToast from './_helpers.ts';
-// import createApi from './_unsplashApi.ts';
 import { createApi } from 'unsplash-js';
 
-const api = createApi({
-	// Don't forget to set your access token here!
-	// See https://unsplash.com/developers
-	accessKey: import.meta.env.VITE_API_ACCESS_KEY,
+const unsplash = createApi({
+	accessKey: '',
 });
 
 const modal = document.querySelector('.dialog') as HTMLDivElement;
@@ -23,17 +22,7 @@ const restartButton = document.querySelector(
 // Hidden class
 const hiddenClass = 'hidden';
 
-interface GameLevels {
-	easy: number;
-	medium: number;
-	hard: number;
-}
-
-const gameLevels: GameLevels = {
-	easy: 8,
-	medium: 16,
-	hard: 20,
-};
+const imageArray: Photos[] = [];
 
 const closeModal = () => {
 	if (nameInput.value) {
@@ -66,39 +55,39 @@ async function checkChoseValue() {
 	console.log(chosedValue);
 
 	await fetchData();
-	await addItems(chosedValue);
+	await addItems(chosedValue, imageArray);
 }
 
-const fetchData = () => {
+async function fetchData() {
 	try {
-		api.search
-			.getPhotos({ query: 'cat', orientation: 'portrait', perPage: 30 })
+		unsplash.search
+			.getPhotos({ query: 'star-wars', orientation: 'portrait', perPage: 30 })
 			.then((result) => {
-				console.log(result.response?.results.length);
-				const imageArray = [];
-				if (result) {
-					imageArray.push(result);
+				console.log(result);
+
+				if (!result.response?.results) {
+					showToast('error', 'Cannot get API data');
 				} else {
-					showToast('error', 'Something went wrong, please try again later');
+					result.response.results.forEach((item) => imageArray.push(item));
 				}
-				console.log(imageArray);
 			});
 	} catch (error) {
 		showToast('error', 'Data fetch failure');
 	}
-};
+}
 
-const addItems = (chosedValue: number) => {
+async function addItems(chosedValue: number, imageArray: object) {
 	const liItem = document.createElement('li');
 	const imgItem = document.createElement('img');
 	const blankItem = document.createElement('div');
 
+	console.log(chosedValue);
+	console.log(imageArray);
+
 	blankItem.classList.add('blank-background');
 	liItem.append(imgItem, blankItem);
 	gameContainer.appendChild(liItem);
-
-	console.log(chosedValue);
-};
+}
 
 document.addEventListener('DOMContentLoaded', () => {
 	playButton.addEventListener('click', (e) => {
