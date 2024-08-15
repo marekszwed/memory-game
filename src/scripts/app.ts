@@ -1,7 +1,7 @@
 import { GameLevels, gameLevels } from './_types.ts';
 import { Basic } from 'unsplash-js/dist/methods/photos/types';
-import showToast from './_helpers.ts';
 import { createApi } from 'unsplash-js';
+import showToast from './_helpers.ts';
 
 const unsplash = createApi({
 	accessKey: '',
@@ -9,7 +9,7 @@ const unsplash = createApi({
 
 const modal = document.querySelector('.dialog') as HTMLDivElement;
 const game = document.querySelector('.js-app') as HTMLDivElement;
-const gameContainer = document.querySelector('.js-game') as HTMLDivElement;
+const ulContainer = document.querySelector('.js-game') as HTMLUListElement;
 const nameInput = document.querySelector('.js-input-name') as HTMLInputElement;
 // Buttons
 const playButton = document.querySelector(
@@ -41,33 +41,32 @@ const setDifficulty = () => {
 	if (selectedInput) {
 		const selectedValue = selectedInput.value;
 		localStorage.setItem('selectedInput', selectedValue);
-		checkChoseValue();
+		checkChosedValue();
 	} else {
 		showToast('warning', 'Please select your difficulty level', {});
 	}
 };
 
-async function checkChoseValue() {
+async function checkChosedValue() {
 	const chosenValue = localStorage.getItem('selectedInput') as keyof GameLevels;
 
 	const chosedValue = gameLevels[chosenValue] || gameLevels.easy;
 	console.log(chosedValue);
 
-	await fetchData();
+	await fetchData(chosedValue);
 	await addItems(chosedValue, imageArray);
 }
 
-async function fetchData() {
+async function fetchData(chosedValue: number) {
 	try {
 		unsplash.search
 			.getPhotos({ query: 'star-wars', orientation: 'portrait', perPage: 30 })
 			.then((result) => {
-				console.log(result);
-
-				if (!result.response?.results) {
+				if (!result.response?.total) {
 					showToast('error', 'Cannot get API data');
 				} else {
 					result.response.results.forEach((item) => imageArray.push(item));
+					addItems(chosedValue, imageArray);
 				}
 			});
 	} catch (error) {
@@ -75,18 +74,30 @@ async function fetchData() {
 	}
 }
 
-async function addItems(chosedValue: number, imageArray: object) {
-	const liItem = document.createElement('li');
-	const imgItem = document.createElement('img');
-	const blankItem = document.createElement('div');
+async function addItems(chosedValue: number, imageArray: Basic[]) {
+	const selectedImages = imageArray.slice(0, chosedValue);
+	// const random = Math.floor(Math.random() * chosedValue);
+	// console.log(random);
 
-	console.log(chosedValue);
-	console.log(imageArray);
+	if (selectedImages) {
+		selectedImages.forEach((item: Basic) => {
+			const liItem: HTMLLIElement = document.createElement('li');
+			const blankItem: HTMLElement = document.createElement('div');
+			const imgItem = document.createElement('img');
 
-	blankItem.classList.add('blank-background');
-	liItem.append(imgItem, blankItem);
-	gameContainer.appendChild(liItem);
+			imgItem.src = item.urls.small;
+			liItem.append(blankItem, imgItem);
+			ulContainer.appendChild(liItem);
+		});
+		checkMatch();
+	} else {
+		showToast('error', 'Cannot load images');
+	}
 }
+
+const checkMatch = () => {
+	console.log('test checkMatch');
+};
 
 document.addEventListener('DOMContentLoaded', () => {
 	playButton.addEventListener('click', (e) => {
