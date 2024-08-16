@@ -28,4 +28,24 @@
 			width: 100%;
 		}
 	}
+	&__find {
+		position: relative;
+		display: flex;
+		row-gap: 1em;
+
+		&-title {
+			font-size: 1.6rem;
+			color: var(--yellow-color);
+			text-transform: uppercase;
+		}
+
+		.image-to-find {
+			display: flex;
+			width: 120px;
+			height: 150px;
+			background-position: center;
+			background-size: cover;
+			border-radius: 10px;
+		}
+	}
 }
