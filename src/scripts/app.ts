@@ -23,7 +23,6 @@ const restartButton = document.querySelector(
 // Hidden class
 const hiddenClass = 'hidden';
 
-const imgToFindArray: HTMLImageElement[] = [];
 const imgItemsArray: Array<HTMLImageElement> = [];
 
 const imageArray: Basic[] = [];
@@ -57,8 +56,8 @@ async function checkChosedValue() {
 	const chosedValue = gameLevels[chosenValue] || gameLevels.easy;
 
 	await fetchData(chosedValue);
-	// await shuffleArray(imageArray);
-	// await createFindContainer(imageArray);
+	await shuffleArray(imageArray);
+	await createFindContainer(imageArray);
 	await addItems(chosedValue, imageArray);
 
 	return chosedValue;
@@ -82,24 +81,18 @@ async function fetchData(chosedValue: number) {
 	}
 }
 
-function shuffleArray(imageArray: Basic[]) {
+async function shuffleArray(imageArray: Basic[]) {
 	for (let i = 0; i < imageArray.length; i++) {
 		const random = Math.floor(Math.random() * imageArray.length);
 		[imageArray[i], imageArray[random]] = [imageArray[random], imageArray[i]];
 	}
-	createFindContainer(imageArray);
 }
 
 async function addItems(chosedValue: number, imageArray: Basic[]) {
 	const selectedImages = imageArray.slice(0, chosedValue);
-	// imgItemsArray = [];
 
 	if (selectedImages) {
 		selectedImages.forEach((item: Basic, i: number) => {
-			// const liItem: HTMLLIElement = document.createElement('li');
-			// const blankItem: HTMLElement = document.createElement('div');
-			// const imgItem: HTMLImageElement = document.createElement('img');
-
 			const imgItem = document.createElement('img');
 			imgItem.classList.add('js-game-img');
 			imgItem.id = `${i++}`;
@@ -107,61 +100,38 @@ async function addItems(chosedValue: number, imageArray: Basic[]) {
 
 			imgItem.src = imgSource;
 
-			// liItem.append(imgItem, blankItem);
-			// ulContainer.appendChild(liItem);
-			// console.log(imgItem);
-
-			gameGrid.appendChild(imgItem);
 			imgItemsArray.push(imgItem);
+			gameGrid.appendChild(imgItem);
 		});
 	} else {
 		showToast('error', 'Cannot load images');
 	}
 
-	createFindContainer(imgItemsArray);
+	return createFindContainer(imgItemsArray);
 }
 
-function createFindContainer(imgItemsArray: Array<object>) {
+async function createFindContainer(imgItemsArray: Array<object>) {
 	const findImageSection = imageArray.slice(0, 1);
 	const randomImg = Math.floor(Math.random() * imgItemsArray.length);
+	console.log(imgItemsArray);
 
-	console.log(imgItemsArray); /////////////////////////////////////////////////////////////////////////
-	// console.log(imgItemsArray);
-
-	findImageSection.forEach((findImage: Basic) => {
+	findImageSection.forEach((imgItemsArray: Basic) => {
 		const findContainer: HTMLDivElement =
 			document.querySelector('.js-find-container')!;
 		const findTitle: HTMLElement = document.querySelector('.js-find-title')!;
 		const imgToFind = document.createElement('img');
-		imgToFind.id = `${randomImg}`;
-		imgToFind.src = findImage.urls.small;
+		imgToFind.id = imgItemsArray.id[randomImg];
+		imgToFind.src = imgItemsArray.urls.small;
 		imgToFind.classList.add('image-to-find');
-		imgToFindArray.push(imgToFind);
 		findContainer.append(imgToFind, findTitle);
 	});
 }
 
 const checkMatch = (e: Event) => {
 	console.log(e.target);
-}
+};
 
-game.addEventListener('click', checkMatch)
-
-// console.log(imgItemsArray);
-
-// const checkMatch = (e: { target: { src: string; }; }) => {
-
-// 	const element = e.target.src
-// 	if(element === ) {
-// 		console.log('ok');
-// 	} else {
-// 		console.log('not ok');
-// 	}
-
-// }
-
-// game.addEventListener('click', checkMatch)
-
+game.addEventListener('click', checkMatch);
 
 document.addEventListener('DOMContentLoaded', () => {
 	playButton.addEventListener('click', (e) => {
