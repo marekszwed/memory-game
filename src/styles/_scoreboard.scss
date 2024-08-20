@@ -29,8 +29,8 @@
 		}
 	}
 	&__find {
-		position: relative;
-		display: flex;
+		@include flex-column;
+
 		row-gap: 1em;
 
 		&-title {

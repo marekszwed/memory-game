@@ -5,7 +5,7 @@ export interface GameLevels {
 }
 
 export const gameLevels: GameLevels = {
-	easy: 8,
-	medium: 16,
-	hard: 20,
+	easy: 6,
+	medium: 12,
+	hard: 18,
 };
