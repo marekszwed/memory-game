@@ -4,7 +4,7 @@ import { createApi } from 'unsplash-js';
 import showToast from './_helpers.ts';
 
 const unsplash = createApi({
-	accessKey: 'G-utIVXOrdr5h7bKSisjUpJijKPTdCh98zklBpzMCNk',
+	accessKey: '',
 });
 
 const modal = document.querySelector('.dialog') as HTMLDivElement;
@@ -97,7 +97,6 @@ async function addItems(chosedValue: number, imageArray: Basic[]) {
 			imgItem.classList.add('js-game-img');
 			imgItem.id = `${i++}`;
 			const imgSource = item.urls.small;
-
 			imgItem.src = imgSource;
 
 			imgItemsArray.push(imgItem);
@@ -107,12 +106,12 @@ async function addItems(chosedValue: number, imageArray: Basic[]) {
 		showToast('error', 'Cannot load images');
 	}
 
-	return createFindContainer(imgItemsArray);
+	return createFindContainer(selectedImages);
 }
 
-async function createFindContainer(imgItemsArray: Array<object>) {
+async function createFindContainer(selectedImages: Array<object>) {
 	const findImageSection = imageArray.slice(0, 1);
-	const randomImg = Math.floor(Math.random() * imgItemsArray.length);
+	const randomImg = Math.floor(Math.random() * selectedImages.length);
 	console.log(imgItemsArray);
 
 	findImageSection.forEach((imgItemsArray: Basic) => {
