@@ -1,3 +1,4 @@
+import { hideScoreboard, showScoreboard } from './_scoreboard.ts';
 import { GameLevels, gameLevels } from './_types.ts';
 import { Basic } from 'unsplash-js/dist/methods/photos/types';
 import { createApi } from 'unsplash-js';
@@ -9,10 +10,12 @@ const unsplash = createApi({
 
 const modal = document.querySelector('.dialog') as HTMLDivElement;
 const game = document.querySelector('.js-app') as HTMLDivElement;
+const gameGrid = document.querySelector('.js-game') as HTMLDivElement;
+const cards = document.querySelectorAll('.card');
 // const ulContainer = document.querySelector('.js-game') as HTMLUListElement;
 const nameInput = document.querySelector('.js-input-name') as HTMLInputElement;
-const scoreboard = document.querySelector('.js-scoreboard') as HTMLDivElement;
-const gameGrid = document.querySelector('.js-game') as HTMLDivElement;
+// const scoreboard = document.querySelector('.js-scoreboard') as HTMLDivElement;
+
 // Buttons
 const playButton = document.querySelector(
 	'.js-play-button'
@@ -27,8 +30,15 @@ const imgItemsArray: Array<HTMLImageElement> = [];
 
 const imageArray: Basic[] = [];
 
-const closeModal = () => {
-	if (nameInput.value) {
+// attempts
+let attemptCounter = 0;
+const maxAttempts = 2;
+
+let playerScore = 0;
+let computerScore = 0;
+
+const validateAndCloseModal = () => {
+	if (nameInput.value.trim()) {
 		modal.classList.add(hiddenClass);
 		game.classList.remove(hiddenClass);
 		setDifficulty();
@@ -56,10 +66,6 @@ async function checkChosedValue() {
 	const chosedValue = gameLevels[chosenValue] || gameLevels.easy;
 
 	await fetchData(chosedValue);
-	await shuffleArray(imageArray);
-	await createFindContainer(imageArray);
-	await addItems(chosedValue, imageArray);
-
 	return chosedValue;
 }
 
@@ -81,14 +87,14 @@ async function fetchData(chosedValue: number) {
 	}
 }
 
-async function shuffleArray(imageArray: Basic[]) {
+function shuffleArray(imageArray: Basic[]) {
 	for (let i = 0; i < imageArray.length; i++) {
 		const random = Math.floor(Math.random() * imageArray.length);
 		[imageArray[i], imageArray[random]] = [imageArray[random], imageArray[i]];
 	}
 }
 
-async function addItems(chosedValue: number, imageArray: Basic[]) {
+function addItems(chosedValue: number, imageArray: Basic[]) {
 	const selectedImages = imageArray.slice(0, chosedValue);
 
 	if (selectedImages) {
@@ -106,35 +112,77 @@ async function addItems(chosedValue: number, imageArray: Basic[]) {
 		showToast('error', 'Cannot load images');
 	}
 
-	return createFindContainer(selectedImages);
+	createToFindItem();
 }
 
-async function createFindContainer(selectedImages: Array<object>) {
-	const findImageSection = imageArray.slice(0, 1);
-	const randomImg = Math.floor(Math.random() * selectedImages.length);
-	console.log(imgItemsArray);
+function createToFindItem() {
+	const randomImg = Math.floor(Math.random() * imgItemsArray.length);
+	const originalImage = imgItemsArray[randomImg];
 
-	findImageSection.forEach((imgItemsArray: Basic) => {
-		const findContainer: HTMLDivElement =
-			document.querySelector('.js-find-container')!;
-		const findTitle: HTMLElement = document.querySelector('.js-find-title')!;
-		const imgToFind = document.createElement('img');
-		imgToFind.id = imgItemsArray.id[randomImg];
-		imgToFind.src = imgItemsArray.urls.small;
-		imgToFind.classList.add('image-to-find');
-		findContainer.append(imgToFind, findTitle);
-	});
+	const findContainer: HTMLDivElement =
+		document.querySelector('.js-find-container')!;
+	const findTitle: HTMLElement = document.querySelector('.js-find-title')!;
+	const imgToFind = document.createElement('img');
+
+	imgToFind.id = originalImage.id;
+	imgToFind.src = originalImage.src;
+	imgToFind.classList.add('image-to-find');
+	findContainer.append(imgToFind, findTitle);
 }
 
-const checkMatch = (e: Event) => {
-	console.log(e.target);
+const checkElements = (event: Event) => {
+	const clickedImg = event.target as HTMLElement;
+	const imgFind = document.querySelector('.image-to-find') as HTMLImageElement;
+
+	const clickedSrcValue = clickedImg.getAttribute('src');
+	const srcToFindValue = imgFind.getAttribute('src');
+	const clickedIdValue = clickedImg.getAttribute('id');
+	const idToFind = imgFind.getAttribute('id');
+
+	if (attemptCounter >= maxAttempts) {
+		showToast('error', 'Brak dalszych prób');
+		return;
+	}
+
+	if (clickedImg.classList.contains('js-game-img')) {
+		attemptCounter++;
+		console.log('clicked od the image', clickedImg);
+		checkMatch(clickedSrcValue, srcToFindValue, idToFind, clickedIdValue);
+	} else {
+		showToast('warning', 'You must choose an image');
+	}
 };
 
-game.addEventListener('click', checkMatch);
+const checkMatch = (
+	clickedSrcValue: string | null,
+	srcToFindValue: string | null | undefined,
+	idToFind: string | null,
+	clickedIdValue: string | null
+) => {
+	if (
+		clickedSrcValue !== null &&
+		srcToFindValue !== null &&
+		clickedIdValue !== null
+	) {
+		if (clickedSrcValue === srcToFindValue || idToFind === clickedSrcValue) {
+			playerScore++;
+			showScoreboard(computerScore, playerScore);
+			console.log('Match');
+		} else {
+			computerScore++;
+			showScoreboard(computerScore, playerScore);
+
+			console.log('Try again');
+		}
+	}
+	return;
+};
+
+game.addEventListener('click', checkElements);
 
 document.addEventListener('DOMContentLoaded', () => {
 	playButton.addEventListener('click', (e) => {
 		e.preventDefault();
-		closeModal();
+		validateAndCloseModal();
 	});
 });
