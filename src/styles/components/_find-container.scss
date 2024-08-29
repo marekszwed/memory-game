@@ -1,0 +1,24 @@
+.app {
+	&__find {
+		@include flex-column;
+		// row-gap: 1em;
+		align-items: center;
+		margin-bottom: 1em;
+
+		&-title {
+			margin-top: 1em;
+			font-size: 1.6rem;
+			color: var(--yellow-color);
+			text-transform: uppercase;
+		}
+
+		.image-to-find {
+			display: flex;
+			width: 120px;
+			height: 150px;
+			background-position: center;
+			background-size: cover;
+			border-radius: 10px;
+		}
+	}
+}

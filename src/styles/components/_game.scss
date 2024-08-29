@@ -1,15 +1,17 @@
 .app {
 	@include flex-column;
+	max-width: 800px;
+
 	.game {
 		position: relative;
 		display: flex;
+		justify-content: center;
 		flex-wrap: wrap;
 		gap: 10px;
-		width: 800px;
 
-		img {
+		&__image {
 			position: relative;
-			display: flex;
+			display: block;
 			width: 120px;
 			height: 150px;
 			overflow: hidden;
@@ -17,33 +19,13 @@
 			background-position: center;
 			background-size: cover;
 			border-radius: 10px;
+			transition: filter 0.3s ease;
+			filter: brightness(1);
 		}
 
-		.blank-background {
-			position: absolute;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			background-image: url('/images/blank.jpg');
-			background-size: cover;
-			background-position: center;
-			border-radius: 10px;
-			transition: 0.3s;
+		.hidden {
+			filter: brightness(0);
+			outline: none;
 		}
-
-		.rotate {
-			transform: rotateX(180deg);
-			opacity: 0;
-		}
-
-		// li {
-		// 	position: relative;
-		// 	display: flex;
-		// 	width: 120px;
-		// 	height: 150px;
-		// 	overflow: hidden;
-		// 	cursor: pointer;
 	}
-	// }
 }
