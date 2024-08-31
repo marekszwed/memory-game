@@ -1,3 +1,5 @@
+import { scoreBoardResults } from './_types';
+
 const scoreboard = document.querySelector('.js-scoreboard') as HTMLDivElement;
 const playerResult = document.querySelector(
 	'.js-player-score'
@@ -6,14 +8,27 @@ const computerResult = document.querySelector(
 	'.js-computer-score'
 ) as HTMLParagraphElement;
 
-export const showScoreboard = (COMPUTER_SCORE: number, PLAYER_SCORE: number, MAX_ATTEMPTS: number, ATTEMPT_COUNTER: number) => {
-	playerResult.textContent = String(PLAYER_SCORE);
-	computerResult.textContent = String(COMPUTER_SCORE);
-	
+export const showScoreboard = () => {
+	const restartButton = document.querySelector(
+		'.js-restart-game'
+	) as HTMLButtonElement;
+	const { playerScore, computerScore, maxAttempts, attemptCounter } =
+		scoreBoardResults;
 
-	if(ATTEMPT_COUNTER == MAX_ATTEMPTS) {
-		scoreboard.classList.add('show');
+	playerResult.textContent = `${playerScore}`;
+	computerResult.textContent = `${computerScore}`;
+
+	if (playerScore > computerScore && attemptCounter === maxAttempts) {
+		scoreboard.style.display = 'flex';
+		restartButton.textContent = 'You Won, play again';
+	} else if (playerScore > computerScore) {
+		scoreboard.style.display = 'flex';
+		restartButton.textContent = 'You Won, play again';
+	} else if (computerScore > playerScore && attemptCounter === maxAttempts) {
+		scoreboard.style.display = 'flex';
+		restartButton.textContent = 'You Lose, try again';
+	} else if (computerScore == playerScore && attemptCounter === maxAttempts) {
+		scoreboard.style.display = 'flex';
+		restartButton.textContent = 'Draw, try again';
 	}
 };
-
-

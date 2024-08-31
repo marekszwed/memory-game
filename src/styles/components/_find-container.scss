@@ -1,6 +1,7 @@
 .app {
 	&__find {
 		@include flex-column;
+		display: none;
 		// row-gap: 1em;
 		align-items: center;
 		margin-bottom: 1em;

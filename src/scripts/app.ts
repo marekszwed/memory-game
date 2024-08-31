@@ -1,5 +1,10 @@
 import { showScoreboard } from './_scoreboard.ts';
-import { GameLevels, gameLevels } from './_types.ts';
+import {
+	eventElementsValues,
+	GameLevels,
+	gameLevels,
+	scoreBoardResults,
+} from './_types.ts';
 import { Basic } from 'unsplash-js/dist/methods/photos/types';
 import { createApi } from 'unsplash-js';
 import showToast from './_helpers.ts';
@@ -22,24 +27,15 @@ const playButton = document.querySelector(
 const restartButton = document.querySelector(
 	'.js-restart-game'
 ) as HTMLButtonElement;
-// Hidden class
-const hiddenClass = 'hidden';
 
 const imgItemsArray: Array<HTMLImageElement> = [];
 
 const fetchArray: Basic[] = [];
 
-// attempts
-let ATTEMPT_COUNTER = 0;
-const MAX_ATTEMPTS = 2;
-
-let PLAYER_SCORE = 0;
-let COMPUTER_SCORE = 0;
-
 const validateAndCloseModal = () => {
 	if (nameInput.value.trim()) {
-		modal.classList.add(hiddenClass);
-		gameSection.classList.remove(hiddenClass);
+		modal.classList.add('hidden');
+		gameSection.classList.remove('hidden');
 		setDifficulty();
 	} else {
 		showToast('warning', 'Please enter your nickname');
@@ -98,6 +94,8 @@ function shuffleArray(fetchArray: Basic[]) {
 function addItemsToGameGrid(chosedValue: number, fetchArray: Basic[]) {
 	const selectedImages = fetchArray.slice(0, chosedValue);
 
+	console.log(selectedImages);
+
 	if (selectedImages) {
 		selectedImages.forEach((item: Basic, i: number) => {
 			const imgItem = document.createElement('img');
@@ -109,14 +107,29 @@ function addItemsToGameGrid(chosedValue: number, fetchArray: Basic[]) {
 			imgItemsArray.push(imgItem);
 			gameGrid.appendChild(imgItem);
 
+			let delay = 0;
+
+			switch (chosedValue) {
+				case 8:
+					delay = 1200;
+					break;
+				case 12:
+					delay = 2000;
+					break;
+				case 18:
+					delay = 2500;
+					break;
+				default:
+					delay = 1200;
+			}
+
 			setTimeout(() => {
-				imgItem.classList.add('hidden');
-			}, 1700);
+				imgItem.classList.add('turn-on-display');
+			}, delay);
 		});
 	} else {
 		showToast('error', 'Cannot load images');
 	}
-
 	createImgToFind();
 }
 
@@ -129,6 +142,8 @@ function createImgToFind() {
 	const findTitle: HTMLElement = document.querySelector('.js-find-title')!;
 	const imgToFind = document.createElement('img');
 
+	findContainer.classList.add('show');
+
 	imgToFind.id = originalImage.id;
 	imgToFind.src = originalImage.src;
 	imgToFind.classList.add('image-to-find');
@@ -139,49 +154,44 @@ const checkElements = (event: Event) => {
 	const clickedImg = event.target as HTMLElement;
 
 	const imgFind = document.querySelector('.image-to-find') as HTMLImageElement;
-	const clickedSrcValue = clickedImg.getAttribute('src');
-	const srcToFindValue = imgFind.getAttribute('src');
-	const clickedIdValue = clickedImg.getAttribute('id');
-	const idToFind = imgFind.getAttribute('id');
+	eventElementsValues.clickedSrcValue = clickedImg.getAttribute('src');
+	eventElementsValues.srcToFindValue = imgFind.getAttribute('src');
+	eventElementsValues.clickedIdValue = clickedImg.getAttribute('id');
+	eventElementsValues.idToFind = imgFind.getAttribute('id');
 
-	if (ATTEMPT_COUNTER >= MAX_ATTEMPTS) {
+	const { clickedSrcValue, srcToFindValue, idToFind, clickedIdValue } =
+		eventElementsValues;
+
+	if (scoreBoardResults.attemptCounter >= scoreBoardResults.maxAttempts) {
 		showToast('error', 'No further attempts, Try Again');
 		return;
 	}
 
 	if (clickedImg.classList.contains('game__image')) {
-		ATTEMPT_COUNTER++;
-		clickedImg.classList.remove('hidden');
+		scoreBoardResults.attemptCounter++;
+		clickedImg.classList.remove('turn-on-display');
 		console.log('clicked od the image', clickedImg);
 
 		if (
 			(clickedSrcValue && srcToFindValue && idToFind && clickedIdValue) !== null
 		) {
-			checkMatchAndShowScoreboard(
-				clickedSrcValue,
-				srcToFindValue,
-				idToFind,
-				clickedIdValue
-			);
+			checkMatchAndShowScoreboard();
 		}
 	} else {
 		showToast('warning', 'You must choose an image');
 	}
 };
 
-const checkMatchAndShowScoreboard = (
-	clickedSrcValue: string | null,
-	srcToFindValue: string | null | undefined,
-	idToFind: string | null,
-	clickedIdValue: string | null
-) => {
+const checkMatchAndShowScoreboard = () => {
+	const { clickedSrcValue, srcToFindValue, idToFind, clickedIdValue } =
+		eventElementsValues;
 	if (clickedSrcValue === srcToFindValue || idToFind === clickedIdValue) {
-		PLAYER_SCORE++;
-		showScoreboard(COMPUTER_SCORE, PLAYER_SCORE, MAX_ATTEMPTS, ATTEMPT_COUNTER);
+		scoreBoardResults.playerScore++;
+		showScoreboard();
 		console.log('Match');
 	} else {
-		COMPUTER_SCORE++;
-		showScoreboard(COMPUTER_SCORE, PLAYER_SCORE, MAX_ATTEMPTS, ATTEMPT_COUNTER);
+		scoreBoardResults.computerScore++;
+		showScoreboard();
 
 		console.log('Try again');
 	}
