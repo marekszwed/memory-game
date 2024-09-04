@@ -18,10 +18,10 @@ export const showScoreboard = () => {
 	playerResult.textContent = `${playerScore}`;
 	computerResult.textContent = `${computerScore}`;
 
-	if (playerScore > computerScore && attemptCounter === maxAttempts) {
-		scoreboard.style.display = 'flex';
-		restartButton.textContent = 'You Won, play again';
-	} else if (playerScore > computerScore) {
+	if (
+		(playerScore > computerScore && attemptCounter === maxAttempts) ||
+		playerScore > computerScore
+	) {
 		scoreboard.style.display = 'flex';
 		restartButton.textContent = 'You Won, play again';
 	} else if (computerScore > playerScore && attemptCounter === maxAttempts) {

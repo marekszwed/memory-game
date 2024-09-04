@@ -26,7 +26,7 @@ export const scoreBoardResults: ScoreBoardResults = {
 
 export interface EventElementsValues {
 	clickedSrcValue: string | null;
-	srcToFindValue: string | null | undefined;
+	srcToFindValue?: string | null;
 	idToFind: string | null;
 	clickedIdValue: string | null;
 }
@@ -36,4 +36,16 @@ export const eventElementsValues: EventElementsValues = {
 	srcToFindValue: null,
 	idToFind: null,
 	clickedIdValue: null,
+};
+
+export interface Delays {
+	8: number;
+	12: number;
+	18: number;
+}
+
+export const delays: Delays = {
+	8: 1200,
+	12: 2000,
+	18: 2500,
 };

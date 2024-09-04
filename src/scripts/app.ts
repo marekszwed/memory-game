@@ -4,6 +4,8 @@ import {
 	GameLevels,
 	gameLevels,
 	scoreBoardResults,
+	delays,
+	Delays,
 } from './_types.ts';
 import { Basic } from 'unsplash-js/dist/methods/photos/types';
 import { createApi } from 'unsplash-js';
@@ -12,7 +14,7 @@ import showToast from './_helpers.ts';
 // import { Photos } from 'unsplash-js/dist/methods/search/types/response';
 
 const unsplash = createApi({
-	accessKey: '',
+	accessKey: 'G-utIVXOrdr5h7bKSisjUpJijKPTdCh98zklBpzMCNk',
 });
 
 const modal = document.querySelector('.dialog') as HTMLDivElement;
@@ -28,14 +30,16 @@ const restartButton = document.querySelector(
 	'.js-restart-game'
 ) as HTMLButtonElement;
 
+const hiddenClass = 'hidden';
+
 const imgItemsArray: Array<HTMLImageElement> = [];
 
 const fetchArray: Basic[] = [];
 
 const validateAndCloseModal = () => {
 	if (nameInput.value.trim()) {
-		modal.classList.add('hidden');
-		gameSection.classList.remove('hidden');
+		modal.classList.add(hiddenClass);
+		gameSection.classList.remove(hiddenClass);
 		setDifficulty();
 	} else {
 		showToast('warning', 'Please enter your nickname');
@@ -94,8 +98,6 @@ function shuffleArray(fetchArray: Basic[]) {
 function addItemsToGameGrid(chosedValue: number, fetchArray: Basic[]) {
 	const selectedImages = fetchArray.slice(0, chosedValue);
 
-	console.log(selectedImages);
-
 	if (selectedImages) {
 		selectedImages.forEach((item: Basic, i: number) => {
 			const imgItem = document.createElement('img');
@@ -107,21 +109,7 @@ function addItemsToGameGrid(chosedValue: number, fetchArray: Basic[]) {
 			imgItemsArray.push(imgItem);
 			gameGrid.appendChild(imgItem);
 
-			let delay = 0;
-
-			switch (chosedValue) {
-				case 8:
-					delay = 1200;
-					break;
-				case 12:
-					delay = 2000;
-					break;
-				case 18:
-					delay = 2500;
-					break;
-				default:
-					delay = 1200;
-			}
+			const delay = delays[chosedValue as keyof Delays] || 1200;
 
 			setTimeout(() => {
 				imgItem.classList.add('turn-on-display');
@@ -187,14 +175,14 @@ const checkMatchAndShowScoreboard = () => {
 		eventElementsValues;
 	if (clickedSrcValue === srcToFindValue || idToFind === clickedIdValue) {
 		scoreBoardResults.playerScore++;
-		showScoreboard();
+
 		console.log('Match');
 	} else {
 		scoreBoardResults.computerScore++;
-		showScoreboard();
 
 		console.log('Try again');
 	}
+	showScoreboard();
 	return;
 };
 
