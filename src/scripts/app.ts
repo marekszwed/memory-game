@@ -14,7 +14,7 @@ import showToast from './_helpers.ts';
 // import { Photos } from 'unsplash-js/dist/methods/search/types/response';
 
 const unsplash = createApi({
-	accessKey: 'G-utIVXOrdr5h7bKSisjUpJijKPTdCh98zklBpzMCNk',
+	accessKey: '',
 });
 
 const modal = document.querySelector('.dialog') as HTMLDivElement;
