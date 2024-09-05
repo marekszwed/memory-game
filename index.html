@@ -7,8 +7,8 @@
 		<title>Memory Game</title>
 	</head>
 	<body>
-		<div class="memory-game">
-			<div
+		<main class="memory-game">
+			<section
 				class="dialog"
 				role="dialog"
 				aria-labelledby="dialogTitle"
@@ -17,7 +17,7 @@
 				<h1 class="dialog__title">star wars memory game</h1>
 				<h2 class="dialog__description">
 					Your goal is to find as many matching pairs of cards as possible. You
-					only have 3 lives. Each time you reveal a card that does not match the
+					only have 2 lives. Each time you reveal a card that does not match the
 					previous one, you lose one life.
 				</h2>
 				<form class="form">
@@ -62,11 +62,10 @@
 					</fieldset>
 					<button type="submit" class="form-btn js-play-button">play</button>
 				</form>
-			</div>
-			<div class="app js-app hidden">
+			</section>
+			<section class="app js-app hidden">
 				<div class="app__find js-find-container">
 					<h2 class="app__find-title js-find-title">Find this images</h2>
-					<div class="app__find-images-container"></div>
 				</div>
 				<div class="game js-game"></div>
 				<div class="scoreboard js-scoreboard">
@@ -78,12 +77,13 @@
 						<p class="computer">Computer</p>
 						<p class="computer-score js-computer-score">0</p>
 					</div>
-					<button class="scoreboard__btn js-restart-game" type="submit">
-						try again
-					</button>
+					<button
+						class="scoreboard__btn js-restart-game"
+						type="submit"
+					></button>
 				</div>
-			</div>
-		</div>
+			</section>
+		</main>
 		<script type="module" src="/src/main.ts"></script>
 	</body>
 </html>

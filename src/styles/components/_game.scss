@@ -1,0 +1,31 @@
+.app {
+	@include flex-column;
+	max-width: 800px;
+
+	.game {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 10px;
+
+		&__image {
+			position: relative;
+			display: block;
+			width: 120px;
+			height: 150px;
+			overflow: hidden;
+			cursor: pointer;
+			background-position: center;
+			background-size: cover;
+			border-radius: 10px;
+			transition: filter 0.3s ease;
+			filter: brightness(1);
+		}
+
+		.turn-on-display {
+			filter: brightness(0);
+			outline: none;
+		}
+	}
+}

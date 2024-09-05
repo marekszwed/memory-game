@@ -1,18 +1,27 @@
-import { GameLevels, gameLevels } from './_types.ts';
+import { showScoreboard } from './_scoreboard.ts';
+import {
+	eventElementsValues,
+	GameLevels,
+	gameLevels,
+	scoreBoardResults,
+	delays,
+	Delays,
+} from './_types.ts';
 import { Basic } from 'unsplash-js/dist/methods/photos/types';
 import { createApi } from 'unsplash-js';
 import showToast from './_helpers.ts';
+
+// import { Photos } from 'unsplash-js/dist/methods/search/types/response';
 
 const unsplash = createApi({
 	accessKey: '',
 });
 
 const modal = document.querySelector('.dialog') as HTMLDivElement;
-const game = document.querySelector('.js-app') as HTMLDivElement;
-// const ulContainer = document.querySelector('.js-game') as HTMLUListElement;
-const nameInput = document.querySelector('.js-input-name') as HTMLInputElement;
-const scoreboard = document.querySelector('.js-scoreboard') as HTMLDivElement;
+const gameSection = document.querySelector('.js-app') as HTMLDivElement;
 const gameGrid = document.querySelector('.js-game') as HTMLDivElement;
+const nameInput = document.querySelector('.js-input-name') as HTMLInputElement;
+
 // Buttons
 const playButton = document.querySelector(
 	'.js-play-button'
@@ -20,20 +29,20 @@ const playButton = document.querySelector(
 const restartButton = document.querySelector(
 	'.js-restart-game'
 ) as HTMLButtonElement;
-// Hidden class
+
 const hiddenClass = 'hidden';
 
 const imgItemsArray: Array<HTMLImageElement> = [];
 
-const imageArray: Basic[] = [];
+const fetchArray: Basic[] = [];
 
-const closeModal = () => {
-	if (nameInput.value) {
+const validateAndCloseModal = () => {
+	if (nameInput.value.trim()) {
 		modal.classList.add(hiddenClass);
-		game.classList.remove(hiddenClass);
+		gameSection.classList.remove(hiddenClass);
 		setDifficulty();
 	} else {
-		showToast('warning', 'Please enter your nickname', {});
+		showToast('warning', 'Please enter your nickname');
 	}
 };
 
@@ -56,85 +65,133 @@ async function checkChosedValue() {
 	const chosedValue = gameLevels[chosenValue] || gameLevels.easy;
 
 	await fetchData(chosedValue);
-	await shuffleArray(imageArray);
-	await createFindContainer(imageArray);
-	await addItems(chosedValue, imageArray);
-
 	return chosedValue;
 }
 
 async function fetchData(chosedValue: number) {
 	try {
-		unsplash.search
-			.getPhotos({ query: 'star-wars', orientation: 'portrait', perPage: 30 })
-			.then((result) => {
-				if (!result.response?.total) {
-					showToast('error', 'Cannot get API data');
-				} else {
-					result.response.results.forEach((item) => imageArray.push(item));
-					shuffleArray(imageArray);
-					addItems(chosedValue, imageArray);
-				}
-			});
+		const data = await unsplash.search.getPhotos({
+			query: 'star-wars',
+			orientation: 'portrait',
+			perPage: 30,
+		});
+
+		if (!data.response?.results) {
+			showToast('error', 'Cannot get API data');
+		} else {
+			data.response?.results.forEach((item) => fetchArray.push(item));
+			shuffleArray(fetchArray);
+			addItemsToGameGrid(chosedValue, fetchArray);
+		}
 	} catch (error) {
 		showToast('error', 'Data fetch failure');
 	}
 }
 
-async function shuffleArray(imageArray: Basic[]) {
-	for (let i = 0; i < imageArray.length; i++) {
-		const random = Math.floor(Math.random() * imageArray.length);
-		[imageArray[i], imageArray[random]] = [imageArray[random], imageArray[i]];
+function shuffleArray(fetchArray: Basic[]) {
+	for (let i = 0; i < fetchArray.length; i++) {
+		const random = Math.floor(Math.random() * fetchArray.length);
+		[fetchArray[i], fetchArray[random]] = [fetchArray[random], fetchArray[i]];
 	}
 }
 
-async function addItems(chosedValue: number, imageArray: Basic[]) {
-	const selectedImages = imageArray.slice(0, chosedValue);
+function addItemsToGameGrid(chosedValue: number, fetchArray: Basic[]) {
+	const selectedImages = fetchArray.slice(0, chosedValue);
 
 	if (selectedImages) {
 		selectedImages.forEach((item: Basic, i: number) => {
 			const imgItem = document.createElement('img');
-			imgItem.classList.add('js-game-img');
+			imgItem.classList.add('game__image');
 			imgItem.id = `${i++}`;
 			const imgSource = item.urls.small;
 			imgItem.src = imgSource;
 
 			imgItemsArray.push(imgItem);
 			gameGrid.appendChild(imgItem);
+
+			const delay = delays[chosedValue as keyof Delays] || 1200;
+
+			setTimeout(() => {
+				imgItem.classList.add('turn-on-display');
+			}, delay);
 		});
 	} else {
 		showToast('error', 'Cannot load images');
 	}
-
-	return createFindContainer(selectedImages);
+	createImgToFind();
 }
 
-async function createFindContainer(selectedImages: Array<object>) {
-	const findImageSection = imageArray.slice(0, 1);
-	const randomImg = Math.floor(Math.random() * selectedImages.length);
-	console.log(imgItemsArray);
+function createImgToFind() {
+	const randomImg = Math.floor(Math.random() * imgItemsArray.length);
+	const originalImage = imgItemsArray[randomImg];
 
-	findImageSection.forEach((imgItemsArray: Basic) => {
-		const findContainer: HTMLDivElement =
-			document.querySelector('.js-find-container')!;
-		const findTitle: HTMLElement = document.querySelector('.js-find-title')!;
-		const imgToFind = document.createElement('img');
-		imgToFind.id = imgItemsArray.id[randomImg];
-		imgToFind.src = imgItemsArray.urls.small;
-		imgToFind.classList.add('image-to-find');
-		findContainer.append(imgToFind, findTitle);
-	});
+	const findContainer: HTMLDivElement =
+		document.querySelector('.js-find-container')!;
+	const findTitle: HTMLElement = document.querySelector('.js-find-title')!;
+	const imgToFind = document.createElement('img');
+
+	findContainer.classList.add('show');
+
+	imgToFind.id = originalImage.id;
+	imgToFind.src = originalImage.src;
+	imgToFind.classList.add('image-to-find');
+	findContainer.append(imgToFind, findTitle);
 }
 
-const checkMatch = (e: Event) => {
-	console.log(e.target);
+const checkElements = (event: Event) => {
+	const clickedImg = event.target as HTMLElement;
+
+	const imgFind = document.querySelector('.image-to-find') as HTMLImageElement;
+	eventElementsValues.clickedSrcValue = clickedImg.getAttribute('src');
+	eventElementsValues.srcToFindValue = imgFind.getAttribute('src');
+	eventElementsValues.clickedIdValue = clickedImg.getAttribute('id');
+	eventElementsValues.idToFind = imgFind.getAttribute('id');
+
+	const { clickedSrcValue, srcToFindValue, idToFind, clickedIdValue } =
+		eventElementsValues;
+
+	if (scoreBoardResults.attemptCounter >= scoreBoardResults.maxAttempts) {
+		showToast('error', 'No further attempts, Try Again');
+		return;
+	}
+
+	if (clickedImg.classList.contains('game__image')) {
+		scoreBoardResults.attemptCounter++;
+		clickedImg.classList.remove('turn-on-display');
+		console.log('clicked od the image', clickedImg);
+
+		if (
+			(clickedSrcValue && srcToFindValue && idToFind && clickedIdValue) !== null
+		) {
+			checkMatchAndShowScoreboard();
+		}
+	} else {
+		showToast('warning', 'You must choose an image');
+	}
 };
 
-game.addEventListener('click', checkMatch);
+const checkMatchAndShowScoreboard = () => {
+	const { clickedSrcValue, srcToFindValue, idToFind, clickedIdValue } =
+		eventElementsValues;
+	if (clickedSrcValue === srcToFindValue || idToFind === clickedIdValue) {
+		scoreBoardResults.playerScore++;
+
+		console.log('Match');
+	} else {
+		scoreBoardResults.computerScore++;
+
+		console.log('Try again');
+	}
+	showScoreboard();
+	return;
+};
 
 document.addEventListener('DOMContentLoaded', () => {
 	playButton.addEventListener('click', (e) => {
 		e.preventDefault();
-		closeModal();
+		validateAndCloseModal();
 	});
 });
+
+gameSection.addEventListener('click', checkElements);
+restartButton.addEventListener('click', () => location.reload());

@@ -1,11 +1,12 @@
-@import '../src/styles/reset';
-@import '../src/styles/variables';
-@import '../src/styles/buttons';
-@import '../src/styles/layout';
-@import '../src/styles/dialog';
-@import '../src/styles/game';
-@import '../src/styles/scoreboard';
-@import '../src/styles/helpers';
+@import './styles/utils/reset';
+@import './styles/variables/variables';
+@import './styles/components/buttons';
+@import './styles/views/layout';
+@import './styles/components/dialog';
+@import './styles/components/find-container';
+@import './styles/helpers/helpers';
+@import './styles/components/game';
+@import './styles/components/scoreboard';
 
 *,
 *::before,
